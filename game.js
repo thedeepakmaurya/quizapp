@@ -12,7 +12,7 @@ let questions = [
     {
         question: "Inside which HTML element do we put the JavaScript",
         choice1: "<script>",
-        chaoice2: "<javascript>",
+        choice2: "<javascript>",
         choice3: "<JS>",
         choice4: "<scripting>",
         answer: 1
@@ -53,7 +53,7 @@ getNewQuestion = () => {
     currentQuestion = availableQuestions[questionIndex];
     question.innerText = currentQuestion.question;
 
-    choices.forEach(choice => {
+    [...choices].forEach(choice => {
         const number = choice.dataset["number"];
         choice.innerText = currentQuestion["choice" + number];
     })
