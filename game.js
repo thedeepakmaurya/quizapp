@@ -20,7 +20,7 @@ let questions = [
     {
         question: "What is the correct syntax for referring to an external script called 'xxx.js'?",
         choice1: "<script href='xxx.js'>",
-        chaoice2: "<script name= 'xxx.js'>",
+        choice2: "<script name= 'xxx.js'>",
         choice3: "<script src = 'xxx.js'>",
         choice4: "<script file = 'xxx.js'>",
         answer: 3
@@ -28,7 +28,7 @@ let questions = [
     {
         question: "How do you write 'Hello World' in an alert box?",
         choice1: "msgBox('Hello World')",
-        chaoice2: "alertBox('Hello World')",
+        choice2: "alertBox('Hello World')",
         choice3: "mag('Hello World')",
         choice4: "alert('Hello World')",
         answer: 4
@@ -48,6 +48,11 @@ startGame = () => {
 }
 
 getNewQuestion = () => {
+
+    if(availableQuestions.length === 0 || questionCounter >= MAX_QUESTIONS){
+        return window.location.assign('/end.html')
+    }
+
     questionCounter++;
     const questionIndex = Math.floor(Math.random() * availableQuestions.length)
     currentQuestion = availableQuestions[questionIndex];
@@ -71,10 +76,21 @@ getNewQuestion = () => {
         const selectedChoice = e.target;
         const selectedAnswer = selectedChoice.dataset["number"];
 
+        // const classToApply = "incorrect";
+        // if (selectedAnswer == currentQuestion.answer){
+        //     classToApply = 'correct';
+        // }
 
-        getNewQuestion();
-    })
-})
+        const classToApply = selectedAnswer == currentQuestion.answer ? 'correct' : 'incorrect' ;
+
+        selectedChoice.parentElement.classList.add(classToApply);
+
+        setTimeout( () => {
+            selectedChoice.parentElement.classList.remove(classToApply);
+            getNewQuestion();
+        }, 1000);
+    });
+});
 
 startGame();
 
