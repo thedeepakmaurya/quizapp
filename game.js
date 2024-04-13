@@ -52,7 +52,8 @@ startGame = () => {
 
 getNewQuestion = () => {
 
-    if(availableQuestions.length === 0 || questionCounter >= MAX_QUESTIONS){
+    if (availableQuestions.length === 0 || questionCounter >= MAX_QUESTIONS) {
+        localStorage.setItem("mostRecentScore", score);
         return window.location.assign('/end.html')
     }
 
@@ -60,7 +61,7 @@ getNewQuestion = () => {
     progressText.innerText = `Question ${questionCounter}/${MAX_QUESTIONS}`;
 
     //Update ProgressBar
-    progressBarFull.style.width = `${(questionCounter/MAX_QUESTIONS) * 100}%`;
+    progressBarFull.style.width = `${(questionCounter / MAX_QUESTIONS) * 100}%`;
 
     const questionIndex = Math.floor(Math.random() * availableQuestions.length)
     currentQuestion = availableQuestions[questionIndex];
@@ -73,14 +74,14 @@ getNewQuestion = () => {
 
     availableQuestions.splice(questionIndex, 1);
 
-    acceptingAnswers=true;
+    acceptingAnswers = true;
 };
 
 [...choices].forEach(choice => {
     choice.addEventListener("click", e => {
-        if(!acceptingAnswers) return;
+        if (!acceptingAnswers) return;
 
-        acceptingAnswers= false;
+        acceptingAnswers = false;
         const selectedChoice = e.target;
         const selectedAnswer = selectedChoice.dataset["number"];
 
@@ -89,15 +90,15 @@ getNewQuestion = () => {
         //     classToApply = 'correct';
         // }
 
-        const classToApply = selectedAnswer == currentQuestion.answer ? 'correct' : 'incorrect' ;
+        const classToApply = selectedAnswer == currentQuestion.answer ? 'correct' : 'incorrect';
 
-        if(classToApply == 'correct') {
+        if (classToApply == 'correct') {
             incrementScore(CORRECT_BONUS)
         }
 
         selectedChoice.parentElement.classList.add(classToApply);
 
-        setTimeout( () => {
+        setTimeout(() => {
             selectedChoice.parentElement.classList.remove(classToApply);
             getNewQuestion();
         }, 1000);
