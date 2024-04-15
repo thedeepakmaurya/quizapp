@@ -11,6 +11,20 @@ let questionCounter = 0;
 let availableQuestions = [];
 
 
+let questions = [];
+
+fetch("questions.json")
+    .then(res => {
+        return res.json();
+    }).then(loadedQuestions => {
+        questions = loadedQuestions;
+        startGame();
+    })
+    .catch(err => {
+
+    })
+
+/** 
 let questions = [
     {
         question: "Inside which HTML element do we put the JavaScript",
@@ -37,6 +51,7 @@ let questions = [
         answer: 4
     }
 ]
+*/
 
 //constants
 const CORRECT_BONUS = 10;
@@ -111,7 +126,6 @@ incrementScore = num => {
 
 }
 
-startGame();
 
 
 
